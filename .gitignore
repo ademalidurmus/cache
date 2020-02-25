@@ -1,0 +1,5 @@
+vendor/*
+doc/*
+cache_files/*
+test/_cache_files/*
+tmp/*
