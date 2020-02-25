@@ -22,14 +22,14 @@ class Helper
     /**
      * @todo use the recursive parameter
      */
-    public function mkdir($dir)
+    public static function mkdir($dir)
     {
         if (!is_dir($dir)) {
             @mkdir($dir);
         }
     }
 
-    public function put(string $path, $content)
+    public static function put(string $path, $content)
     {
         @touch($path);
         return @file_put_contents($path, $content) !== false;
