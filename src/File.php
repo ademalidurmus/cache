@@ -7,7 +7,7 @@ class File implements CacheInterface
     private $cache_dir = __DIR__ . "/../cache_files";
     private $cache_ttl = -1;
 
-    public function init(array $config = [])
+    public static function init(array $config = [])
     {
         $file = new File();
         return $file->setConfig($config);
