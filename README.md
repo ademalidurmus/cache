@@ -1,9 +1,20 @@
 # Cache
 PHP cache library
 
+[![Build Status](https://travis-ci.com/AdemAliDurmus/cache.svg?branch=master)](https://travis-ci.com/AdemAliDurmus/cache)
+[![Latest Stable Version](https://poser.pugx.org/aad/cache/v/stable)](https://packagist.org/packages/aad/cache)
+[![Total Downloads](https://poser.pugx.org/aad/cache/downloads)](https://packagist.org/packages/aad/cache)
+[![Latest Unstable Version](https://poser.pugx.org/aad/cache/v/unstable)](https://packagist.org/packages/aad/cache)
+[![License](https://poser.pugx.org/aad/cache/license)](https://packagist.org/packages/aad/cache)
+
 ## Supported Drivers
 - Files
 - Redis (WIP)
+
+## Installation
+```
+composer require aad/cache
+```
 
 ## Usage
 ```php
