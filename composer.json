@@ -4,7 +4,6 @@
     "type": "library",
     "keywords": ["cache", "filecache", "redis"],
     "license": "MIT",
-    "version": "0.1.1",
     "authors": [
         {
             "name": "Adem Ali Durmuş",
