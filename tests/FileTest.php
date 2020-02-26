@@ -93,7 +93,7 @@ final class FileTest extends TestCase
         $file = new File();
         $file_path = $file->setConfig(self::TEST_CONFIG)->getCacheFilePath('test_key');
 
-        @file_put_contents($file_path, '{key":"test_key","value":"s:8:\"test_val\";","expire_time":1582571518,"create_time":1582571518,"update_time":1582571518,"hash":"96aadd7725f0a503bd890ae1a2e4fb3e8fa328f1"}');
+        @file_put_contents($file_path, '{key":"test_key","value":"s:8:\"test_val\";","expire_time":1582571518,"create_time":1582571518,"update_time":1582571518,"hash":"96aadd7725f0a503bd890ae1a2e4fb3e8fa328f1","method":"set"}');
 
         $response = $file->setConfig(self::TEST_CONFIG)->get('test_key');
         $this->assertFalse($response);
@@ -104,7 +104,7 @@ final class FileTest extends TestCase
         $file = new File();
         $file_path = $file->setConfig(self::TEST_CONFIG)->getCacheFilePath('test_key_1');
 
-        @file_put_contents($file_path, '{"key":"test_key_1","value":"s:8:\"test_val\";","expire_time":' . time() + 3600 . ',"create_time":1582571518,"update_time":1582571518,"hash":"96aadd7725f0a503bd890ae1a2e4fb3e8fa328f1"}');
+        @file_put_contents($file_path, '{"key":"test_key_1","value":"s:8:\"test_val\";","expire_time":' . time() + 3600 . ',"create_time":1582571518,"update_time":1582571518,"hash":"96aadd7725f0a503bd890ae1a2e4fb3e8fa328f1","method":"set"}');
 
         $response = $file->setConfig(self::TEST_CONFIG)->get('test_key_1');
         $this->assertFalse($response);
@@ -147,7 +147,7 @@ final class FileTest extends TestCase
     {
         $file_path = File::init(self::TEST_CONFIG)->getCacheFilePath('test_hash');
 
-        @file_put_contents($file_path, '{hash":"327d106bf608b1f63bf5cbc5d1b6ea2d6836b446","value":{"test_key_1":"s:17:\"test_val_1\";"},"expire_time":-1,"create_time":1582653164,"update_time":1582653164}');
+        @file_put_contents($file_path, '{hash":"327d106bf608b1f63bf5cbc5d1b6ea2d6836b446","value":{"test_key_1":"s:17:\"test_val_1\";"},"expire_time":-1,"create_time":1582653164,"update_time":1582653164,"method":"hset"}');
 
         $response = File::init(self::TEST_CONFIG)->hget('test_hash', 'test_key_1');
         $this->assertFalse($response);
@@ -157,7 +157,7 @@ final class FileTest extends TestCase
     {
         $file_path = File::init(self::TEST_CONFIG)->getCacheFilePath('test_wrong_hash');
 
-        @file_put_contents($file_path, '{"hash":"327d106bf608b1f63bf5cbc5d1b6ea2d6836b446","value":{"test_key_1":"s:17:\"test_val_1\";"},"expire_time":-1,"create_time":1582653164,"update_time":1582653164}');
+        @file_put_contents($file_path, '{"hash":"327d106bf608b1f63bf5cbc5d1b6ea2d6836b446","value":{"test_key_1":"s:17:\"test_val_1\";"},"expire_time":-1,"create_time":1582653164,"update_time":1582653164,"method":"hset"}');
 
         $response = File::init(self::TEST_CONFIG)->hget('test_wrong_hash', 'test_key_1');
         $this->assertFalse($response);
@@ -202,7 +202,7 @@ final class FileTest extends TestCase
     {
         $file_path = File::init(self::TEST_CONFIG)->getCacheFilePath('test_hash');
 
-        @file_put_contents($file_path, '{hash":"327d106bf608b1f63bf5cbc5d1b6ea2d6836b446","value":{"test_key_1":"s:17:\"test_val_1\";"},"expire_time":-1,"create_time":1582653164,"update_time":1582653164}');
+        @file_put_contents($file_path, '{hash":"327d106bf608b1f63bf5cbc5d1b6ea2d6836b446","value":{"test_key_1":"s:17:\"test_val_1\";"},"expire_time":-1,"create_time":1582653164,"update_time":1582653164,"method":"hset"}');
 
         $response = File::init(self::TEST_CONFIG)->hdel('test_hash', 'test_key_1');
         $this->assertFalse($response);
@@ -212,7 +212,7 @@ final class FileTest extends TestCase
     {
         $file_path = File::init(self::TEST_CONFIG)->getCacheFilePath('test_wrong_hash');
 
-        @file_put_contents($file_path, '{"hash":"327d106bf608b1f63bf5cbc5d1b6ea2d6836b446","value":{"test_key_1":"s:17:\"test_val_1\";","test_key_2":"s:17:\"test_val_2\";"},"expire_time":-1,"create_time":1582653164,"update_time":1582653164}');
+        @file_put_contents($file_path, '{"hash":"327d106bf608b1f63bf5cbc5d1b6ea2d6836b446","value":{"test_key_1":"s:17:\"test_val_1\";","test_key_2":"s:17:\"test_val_2\";"},"expire_time":-1,"create_time":1582653164,"update_time":1582653164,"method":"hset"}');
 
         $response = File::init(self::TEST_CONFIG)->hdel('test_wrong_hash', 'test_key_1');
         $this->assertFalse($response);
@@ -256,13 +256,77 @@ final class FileTest extends TestCase
         $response = File::init(self::TEST_CONFIG)->ttl('test_new_key_1');
         $this->assertEquals(-1, $response);
 
-        $response = File::init(self::TEST_CONFIG)->set('test_new_key_2', 'test_val', 1);
+        $response = File::init(self::TEST_CONFIG)->set('test_new_key_2', 'test_val', 0);
         $this->assertTrue($response);
         $this->assertTrue(file_exists(self::TEST_CACHE_DIR . "/te/st/test_new_key_2"));
-        sleep(2);
+        sleep(1);
         $response = File::init(self::TEST_CONFIG)->ttl('test_new_key_2');
         $this->assertEquals(-2, $response);
         $this->assertFalse(file_exists(self::TEST_CACHE_DIR . "/te/st/test_new_key_2"));
+    }
+
+    public function testExists()
+    {
+        $response = File::init(self::TEST_CONFIG)->set('test_exists_key', 'test_val');
+        $this->assertTrue($response);
+
+        $response = File::init(self::TEST_CONFIG)->exists('test_exists_key');
+        $this->assertTrue($response);
+
+        $response = File::init(self::TEST_CONFIG)->del('test_exists_key');
+        $this->assertTrue($response);
+ 
+        $response = File::init(self::TEST_CONFIG)->exists('test_exists_key');
+        $this->assertFalse($response);
+
+        $response = File::init(self::TEST_CONFIG)->set('test_exists_key_with_ttl', 'test_val', 0);
+        $this->assertTrue($response);
+        sleep(1);
+        $response = File::init(self::TEST_CONFIG)->exists('test_exists_key_with_ttl');
+        $this->assertFalse($response);
+    }
+
+    public function testFlusall()
+    {
+        $response = File::init(self::TEST_CONFIG)->set('test_flushall_key', 'test_val');
+        $this->assertTrue($response);
+
+        $response = File::init(self::TEST_CONFIG)->exists('test_flushall_key');
+        $this->assertTrue($response);
+
+        $response = File::init(self::TEST_CONFIG)->flushall();
+        $this->assertTrue($response);
+ 
+        $response = File::init(self::TEST_CONFIG)->exists('test_flushall_key');
+        $this->assertFalse($response);
+    }
+
+    public function testHsetHdelForExistingSetMethodKey()
+    {
+        $response = File::init(self::TEST_CONFIG)->set('test_hash', 'test_val');
+        $this->assertTrue($response);
+
+        $response = File::init(self::TEST_CONFIG)->hset('test_hash', 'test_key', 'test_val');
+        $this->assertFalse($response);
+
+        $response = File::init(self::TEST_CONFIG)->hdel('test_hash', 'test_key');
+        $this->assertFalse($response);
+
+        $response = File::init(self::TEST_CONFIG)->exists('test_hash');
+        $this->assertTrue($response);
+    }
+
+
+    public function testSetForExistingHsetMethodKey()
+    {
+        $response = File::init(self::TEST_CONFIG)->flushall();
+        $this->assertTrue($response);
+ 
+        $response = File::init(self::TEST_CONFIG)->hset('test_hash', 'test_key', 'test_val');
+        $this->assertTrue($response);
+
+        $response = File::init(self::TEST_CONFIG)->set('test_hash', 'test_val');
+        $this->assertFalse($response);
     }
 
     public function testRemoveDir()

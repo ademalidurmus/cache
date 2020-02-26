@@ -21,7 +21,7 @@
     },
     "require": {
         "php": "^7.3",
-        "ramsey/uuid": "^2.8"
+        "psr/simple-cache": "^1.0"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "^3.3",

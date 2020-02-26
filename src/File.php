@@ -86,11 +86,15 @@ class File implements CacheInterface
             'create_time' => time(),
             'update_time' => time(),
             'hash' => sha1("{$key}{$value}"),
+            'method' => 'set',
         ];
 
         if (file_exists($path)) {
             $current_data = json_decode(file_get_contents($path), true);
             if (json_last_error() === JSON_ERROR_NONE) {
+                if ($current_data['method'] !== 'set') {
+                    return false;
+                }
                 $data['create_time'] = $current_data['create_time'] ?? time();
             }
         }
@@ -196,6 +200,29 @@ class File implements CacheInterface
         return $ttl;
     }
 
+    public function exists(string $hash)
+    {
+        $path = $this->getCacheFilePath($hash);
+        $data = $this->getCacheContent($path);
+
+        if ($data === false) {
+            return false;
+        }
+
+        if ($data['expire_time'] !== -1 && $data['expire_time'] < time()) {
+            @unlink($path);
+            return false;
+        }
+
+        return true;
+    }
+
+    public function flushall()
+    {
+        Helper::remove($this->cache_dir);
+        return !is_dir($this->cache_dir);
+    }
+
     private function hashSet(string $hash, array $content)
     {
         $path = $this->getCacheFilePath($hash);
@@ -211,11 +238,15 @@ class File implements CacheInterface
             'create_time' => time(),
             'update_time' => time(),
             'hash' => sha1($hash),
+            'method' => 'hset',
         ];
 
         if (file_exists($path)) {
             $current_data = json_decode(file_get_contents($path), true);
             if (json_last_error() === JSON_ERROR_NONE) {
+                if ($current_data['method'] !== 'hset') {
+                    return false;
+                }
                 $data['create_time'] = $current_data['create_time'] ?? time();
                 if (is_array($current_data['value'])) {
                     $data['value'] = array_merge($current_data['value'], $data['value']);
@@ -257,6 +288,10 @@ class File implements CacheInterface
         $data = $this->getCacheContent($path);
 
         if ($data === false) {
+            return false;
+        }
+
+        if ($data['method'] !== 'hset') {
             return false;
         }
 

@@ -23,4 +23,8 @@ interface CacheInterface
     public function expire(string $hash, int $ttl);
 
     public function ttl(string $hash);
+
+    public function exists(string $hash);
+    
+    public function flushall();
 }

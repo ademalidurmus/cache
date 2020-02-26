@@ -55,6 +55,21 @@ final class CacheTest extends TestCase
         $this->assertEquals('test_val', $response);
     }
 
+    public function testGetWithDefault()
+    {
+        $response = Cache::init(File::init(self::TEST_CONFIG))->get('test_unknown_key');
+        $this->assertFalse($response);
+
+        $response = Cache::init(File::init(self::TEST_CONFIG))->get('test_unknown_key', 'default_val');
+        $this->assertEquals('default_val', $response);
+    }
+
+    public function testExists()
+    {
+        $response = Cache::init(File::init(self::TEST_CONFIG))->exists('test_key');
+        $this->assertTrue($response);
+    }
+
     public function testKeyCleaner()
     {
         $response = Cache::init(File::init(self::TEST_CONFIG))->set('test key 1', 'test_val');
@@ -113,6 +128,103 @@ final class CacheTest extends TestCase
     {
         $response = Cache::init(File::init(self::TEST_CONFIG))->hgetall('test_new_hash');
         $this->assertIsArray($response);
+    }
+
+    public function testClearAndFlushall()
+    {
+        $response = Cache::init(File::init(self::TEST_CONFIG))->exists('test_new_hash');
+        $this->assertTrue($response);
+
+        $response = Cache::init(File::init(self::TEST_CONFIG))->clear();
+        $this->assertTrue($response);
+
+        $response = Cache::init(File::init(self::TEST_CONFIG))->exists('test_new_hash');
+        $this->assertFalse($response);
+    }
+
+    public function testDelete()
+    {
+        $response = Cache::init(File::init(self::TEST_CONFIG))->set('test_key', 'test_val');
+        $this->assertTrue($response);
+
+        $response = Cache::init(File::init(self::TEST_CONFIG))->exists('test_key');
+        $this->assertTrue($response);
+
+        $response = Cache::init(File::init(self::TEST_CONFIG))->delete('test_key');
+        $this->assertTrue($response);
+
+        $response = Cache::init(File::init(self::TEST_CONFIG))->exists('test_key');
+        $this->assertFalse($response);
+    }
+
+    public function testSetMultiple()
+    {
+        $response = Cache::init(File::init(self::TEST_CONFIG))->setMultiple(['multiple_key_1' => 'multiple_val_1', 'multiple_key_2' => 'multiple_val_2']);
+        $this->assertTrue($response);
+
+        $response = Cache::init(File::init(self::TEST_CONFIG))->exists('multiple_key_1');
+        $this->assertTrue($response);
+
+        $response = Cache::init(File::init(self::TEST_CONFIG))->exists('multiple_key_2');
+        $this->assertTrue($response);
+
+        $response = Cache::init(File::init(self::TEST_CONFIG))->setMultiple(['multiple_key_4' => 'multiple_val_4'], -200);
+        $this->assertTrue($response);
+
+        $response = Cache::init(File::init(self::TEST_CONFIG))->ttl('multiple_key_2');
+        $this->assertEquals(self::TEST_CONFIG['cache_ttl'], $response);
+    }
+
+    public function testSetMultipleForExistingKey()
+    {
+        $response = Cache::init(File::init(self::TEST_CONFIG))->hmset('test_new_hash', ['test_key_1' => 'test_val_1', 'test_key_2' => 'test_val_2']);
+        $this->assertTrue($response);
+
+        $response = Cache::init(File::init(self::TEST_CONFIG))->setMultiple(['test_new_hash' => 'test_val']);
+        $this->assertFalse($response);
+    }
+
+    public function testHas()
+    {
+        $response = Cache::init(File::init(self::TEST_CONFIG))->has('multiple_key_1');
+        $this->assertTrue($response);
+    }
+
+    public function testGetMultiple()
+    {
+        $response = Cache::init(File::init(self::TEST_CONFIG))->exists('multiple_key_1');
+        $this->assertTrue($response);
+
+        $response = Cache::init(File::init(self::TEST_CONFIG))->exists('multiple_key_2');
+        $this->assertTrue($response);
+
+        $response = Cache::init(File::init(self::TEST_CONFIG))->exists('multiple_key_3');
+        $this->assertFalse($response);
+
+        $response = Cache::init(File::init(self::TEST_CONFIG))->getMultiple(['multiple_key_1', 'multiple_key_2', 'multiple_key_3'], 'default_val');
+        $this->assertIsArray($response);
+        $this->assertEquals('default_val', $response['multiple_key_3']);
+    }
+
+    public function testDeleteMultiple()
+    {
+        $response = Cache::init(File::init(self::TEST_CONFIG))->exists('multiple_key_1');
+        $this->assertTrue($response);
+
+        $response = Cache::init(File::init(self::TEST_CONFIG))->exists('multiple_key_2');
+        $this->assertTrue($response);
+
+        $response = Cache::init(File::init(self::TEST_CONFIG))->deleteMultiple(['multiple_key_1', 'multiple_key_2']);
+        $this->assertTrue($response);
+
+        $response = Cache::init(File::init(self::TEST_CONFIG))->exists('multiple_key_1');
+        $this->assertFalse($response);
+
+        $response = Cache::init(File::init(self::TEST_CONFIG))->exists('multiple_key_2');
+        $this->assertFalse($response);
+
+        $response = Cache::init(File::init(self::TEST_CONFIG))->deleteMultiple(['multiple_key_1', 'multiple_key_2']);
+        $this->assertFalse($response);
     }
 
     public function testRemoveDir()

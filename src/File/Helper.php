@@ -4,14 +4,16 @@ class Helper
 {
     public static function remove($dir)
     {
-        $scan = scandir($dir);
+        $scan = @scandir($dir);
         
-        foreach ($scan as $key => $value) {
-            if (!in_array($value, [".", ".."])) {
-                if (is_dir($dir . DIRECTORY_SEPARATOR . $value)) {
-                    self::remove($dir . DIRECTORY_SEPARATOR . $value);
-                } else {
-                    @unlink($dir . DIRECTORY_SEPARATOR . $value);
+        if (is_array($scan)) {
+            foreach ($scan as $key => $value) {
+                if (!in_array($value, [".", ".."])) {
+                    if (is_dir($dir . DIRECTORY_SEPARATOR . $value)) {
+                        self::remove($dir . DIRECTORY_SEPARATOR . $value);
+                    } else {
+                        @unlink($dir . DIRECTORY_SEPARATOR . $value);
+                    }
                 }
             }
         }
