@@ -13,7 +13,8 @@ jobs:
     - name: Validate composer.json and composer.lock
       run: composer validate
 
-    # - name: Install dependencies
+    - name: Install dependencies
+      run: composer update --lock
     # run: composer install --prefer-dist --no-progress --no-suggest
 
     - name: PHPUnit (php-actions)
