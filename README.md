@@ -18,15 +18,15 @@ composer require aad/cache
 ## Usage
 ```php
 use AAD\Cache\Cache;
-use AAD\Cache\File;
+use AAD\Cache\Drivers\Files\Files;
 
 $config = [
-    'cache_dir' => __DIR__ . '/tmp', // cache file directory
+    'cache_dir' => __DIR__ . '/_cache_files_test', // cache file directory
     'cache_ttl' => 180, // set cache ttl
 ];
 
-$file = File::init($config);
-$cache = new Cache($file);
+$files = Files::init($config);
+$cache = new Cache($files);
 
 $cache->set('test_key', 'test_val'); // set cache with specific key
 $cache->get('test_key', 'default_val'); // get cache value for specific key, if the key does not exist, you can return a default value

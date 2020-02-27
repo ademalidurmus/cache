@@ -1,4 +1,4 @@
-<?php namespace AAD\Cache\File;
+<?php namespace AAD\Cache\Drivers\Files;
 
 class Helper
 {

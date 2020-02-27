@@ -1,16 +1,17 @@
-<?php namespace AAD\Cache;
+<?php namespace AAD\Cache\Drivers\Files;
 
-use AAD\Cache\File\Helper;
+use AAD\Cache\CacheInterface;
+use AAD\Cache\Drivers\Files\Helper;
 
-class File implements CacheInterface
+class Files implements CacheInterface
 {
-    private $cache_dir = __DIR__ . "/../cache_files";
+    private $cache_dir = __DIR__ . "/../../../_cache_files";
     private $cache_ttl = -1;
 
     public static function init(array $config = [])
     {
-        $file = new File();
-        return $file->setConfig($config);
+        $files = new Files();
+        return $files->setConfig($config);
     }
     
     public function setConfig(array $config = [])

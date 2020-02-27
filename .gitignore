@@ -1,5 +1,4 @@
 vendor/*
 doc/*
-cache_files/*
-test/_cache_files/*
-tmp/*
+_cache_files/*
+_cache_files_test/*

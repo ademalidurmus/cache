@@ -1,10 +1,10 @@
-<?php namespace AAD\Cache\File;
+<?php namespace AAD\Cache\Drivers\Files;
 
 use PHPUnit\Framework\TestCase;
 
 final class HelperTest extends TestCase
 {
-    const TEST_DIR = __DIR__ . "/_file_system";
+    const TEST_DIR = __DIR__ . "/../../_cache_files_test";
 
     public function testRemoveFile()
     {

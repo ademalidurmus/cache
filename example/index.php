@@ -1,8 +1,8 @@
 <?php
-require __DIR__ . "/vendor/autoload.php";
+require __DIR__ . "/../vendor/autoload.php";
 
 use AAD\Cache\Cache;
-use AAD\Cache\File;
+use AAD\Cache\Drivers\Files\Files;
 
 /**
  * Konfigurasyon bilgilerinin tanimlanmasi;
@@ -10,20 +10,20 @@ use AAD\Cache\File;
  * cache_ttl: Verilerin onbellekte tutulacagi sure. Bu bilgi verinin on bellekte tutulmasi icin islem yapildiginda ozellestirilebilir. -1 sonsuza kadar tutulacagi anlamina gelir.
  */
 $config = [
-    'cache_dir' => __DIR__ . '/cache',
+    'cache_dir' => __DIR__ . '/../_cache_files_test',
     'cache_ttl' => 180,
 ];
 
 /**
- * Dosya sistemi uzerinden verilerin onbellege alinmasi icin File sinifini kullaniyoruz.
+ * Dosya sistemi uzerinden verilerin onbellege alinmasi icin Files sinifini kullaniyoruz.
  */
-$file = File::init($config);
+$files = Files::init($config);
 
 /**
  * Yeni bir cache objesi olusturuyoruz.
- * Alternatif kullanimlar: Cache::init($file) veya Cache::init(File::init($config))
+ * Alternatif kullanimlar: Cache::init($files) veya Cache::init(Files::init($config))
  */
-$cache = new Cache($file);
+$cache = new Cache($files);
 
 /**
  * Verinin daha onceden onbellege alinip/alinmadigini kontrol ediyoruz.
