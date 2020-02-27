@@ -14,9 +14,12 @@ jobs:
       run: composer validate
 
     - name: Install dependencies
-      run: composer update --prefer-dist --no-progress --no-suggest
+      run: composer update
     # run: composer install --prefer-dist --no-progress --no-suggest
 
+    - name: PHPUnit (php-actions)
+      uses: php-actions/phpunit@v1
+    
     # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # Docs: https://getcomposer.org/doc/articles/scripts.md
 
