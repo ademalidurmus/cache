@@ -8,7 +8,7 @@ PHP cache library with PSR-16
 
 ## Supported Drivers
 - Files
-- Redis (WIP)
+- Redis
 
 ## Installation
 ```
@@ -19,14 +19,22 @@ composer require aad/cache
 ```php
 use AAD\Cache\Cache;
 use AAD\Cache\Drivers\Files\Files;
+use AAD\Cache\Drivers\Redis\Redis;
 
+// use file system driver
 $config = [
     'cache_dir' => __DIR__ . '/_cache_files_test', // cache file directory
     'cache_ttl' => 180, // set cache ttl
 ];
+$driver = Files::init($config);
 
-$files = Files::init($config);
-$cache = new Cache($files);
+// use redis driver
+$connection = new \Redis();
+$connection->connect('localhost', 6379);
+$driver = Redis::init($connection);
+
+
+$cache = new Cache($driver);
 
 $cache->set('test_key', 'test_val'); // set cache with specific key
 $cache->get('test_key', 'default_val'); // get cache value for specific key, if the key does not exist, you can return a default value

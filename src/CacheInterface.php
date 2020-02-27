@@ -2,8 +2,6 @@
 
 interface CacheInterface
 {
-    public function setConfig(array $config = []);
-
     public function set(string $key, $value, int $ttl = null);
 
     public function get(string $key);
