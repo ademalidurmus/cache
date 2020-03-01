@@ -20,19 +20,24 @@ composer require aad/cache
 use AAD\Cache\Cache;
 use AAD\Cache\Drivers\Files\Files;
 use AAD\Cache\Drivers\Redis\Redis;
+use AAD\Cache\Drivers\Predis\Predis;
 
-// use file system driver
+// for using files driver
 $config = [
     'cache_dir' => __DIR__ . '/_cache_files_test', // cache file directory
     'cache_ttl' => 180, // set cache ttl
 ];
 $driver = Files::init($config);
 
-// use redis driver
+// for using redis driver
 $connection = new \Redis();
 $connection->connect('localhost', 6379);
 $driver = Redis::init($connection);
 
+// for using predis driver
+$connection = new \Predis\Client();
+$connection->connect('localhost', 6379);
+$driver = Predis::init($connection);
 
 $cache = new Cache($driver);
 
