@@ -9,6 +9,7 @@ PHP cache library with PSR-16
 ## Supported Drivers
 - Files
 - Redis
+- Predis
 
 ## Installation
 ```
