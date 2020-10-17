@@ -27,7 +27,7 @@ class Cache implements SimpleCacheInterface
         return $this->cache->set($key, $value, $ttl);
     }
 
-    public function get($key = null, $default = false)
+    public function get($key, $default = false)
     {
         $key = self::keyCleaner($key);
         $value = $this->cache->get($key);
