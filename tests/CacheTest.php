@@ -79,9 +79,6 @@ final class CacheTest extends TestCase
 
         $response = Cache::init(Files::init(self::TEST_CONFIG))->get('test key 1');
         $this->assertEquals('test_val', $response);
-
-        $response = Cache::init(Files::init(self::TEST_CONFIG))->get('test_key_1');
-        $this->assertEquals('test_val', $response);
     }
 
     public function testDel()

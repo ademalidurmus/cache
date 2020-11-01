@@ -118,9 +118,12 @@ class Cache implements SimpleCacheInterface
         return $this->cache->flushall();
     }
 
+    /**
+     * Maybe we can clean with preg_replace('/[^A-Za-z0-9]/', '_', $key)
+     */
     private static function keyCleaner(string $key)
     {
-        return preg_replace('/[^A-Za-z0-9]/', '_', $key);
+        return $key;
     }
 
     public function delete($key)
