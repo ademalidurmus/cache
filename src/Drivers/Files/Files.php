@@ -2,6 +2,7 @@
 
 use AAD\Cache\CacheInterface;
 use AAD\Cache\Drivers\Files\Helper;
+use Rhumsaa\Uuid\Uuid;
 
 class Files implements CacheInterface
 {
@@ -68,6 +69,7 @@ class Files implements CacheInterface
 
     public function getCacheFilePath(string $hash)
     {
+        $hash = Uuid::uuid5(Uuid::NIL, $hash);
         return $this->getCacheDir($hash) . "/{$hash}";
     }
 

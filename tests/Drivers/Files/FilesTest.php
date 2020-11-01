@@ -1,5 +1,6 @@
 <?php namespace AAD\Cache\Drivers\Files;
 
+use AAD\Cache\CacheTest;
 use PHPUnit\Framework\TestCase;
 
 final class FilesTest extends TestCase
@@ -258,11 +259,11 @@ final class FilesTest extends TestCase
 
         $response = Files::init(self::TEST_CONFIG)->set('test_new_key_2', 'test_val', 0);
         $this->assertTrue($response);
-        $this->assertTrue(file_exists(self::TEST_CACHE_DIR . "/te/st/test_new_key_2"));
+        $this->assertTrue(file_exists(self::TEST_CACHE_DIR . CacheTest::_getHash('test_new_key_2')));
         sleep(1);
         $response = Files::init(self::TEST_CONFIG)->ttl('test_new_key_2');
         $this->assertEquals(-2, $response);
-        $this->assertFalse(file_exists(self::TEST_CACHE_DIR . "/te/st/test_new_key_2"));
+        $this->assertFalse(file_exists(self::TEST_CACHE_DIR . CacheTest::_getHash('test_new_key_2')));
     }
 
     public function testExists()
