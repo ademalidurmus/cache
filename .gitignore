@@ -2,3 +2,4 @@ vendor/*
 doc/*
 _cache_files/*
 _cache_files_test/*
+.phpunit.result.cache

@@ -2,6 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 use AAD\Cache\Drivers\Files\Files;
+use Rhumsaa\Uuid\Uuid;
 
 final class CacheTest extends TestCase
 {
@@ -87,10 +88,10 @@ final class CacheTest extends TestCase
     {
         $response = Cache::init(Files::init(self::TEST_CONFIG))->set('test_key_2', 'test_val_2');
         $this->assertTrue($response);
-        $this->assertTrue(file_exists(self::TEST_CACHE_DIR . "/te/st/test_key_2"));
+        $this->assertTrue(file_exists(self::TEST_CACHE_DIR . self::_getHash('test_key_2')));
 
         $response = Cache::init(Files::init(self::TEST_CONFIG))->del('test_key_2');
-        $this->assertTrue(!file_exists(self::TEST_CACHE_DIR . "/te/st/test_key_2"));
+        $this->assertTrue(!file_exists(self::TEST_CACHE_DIR . self::_getHash('test_key_2')));
     }
 
     public function testDelUnknownKey()
@@ -103,7 +104,7 @@ final class CacheTest extends TestCase
     {
         $response = Cache::init(Files::init(self::TEST_CONFIG))->hset('test_hash', 'test_key_1', 'test_val_1');
         $this->assertTrue($response);
-        $this->assertTrue(file_exists(self::TEST_CACHE_DIR . "/te/st/test_hash"));
+        $this->assertTrue(file_exists(self::TEST_CACHE_DIR . self::_getHash('test_hash')));
     }
 
     public function testHget()
@@ -116,7 +117,7 @@ final class CacheTest extends TestCase
     {
         $response = Cache::init(Files::init(self::TEST_CONFIG))->hdel('test_hash', 'test_key_1');
         $this->assertTrue($response);
-        $this->assertFalse(file_exists(self::TEST_CACHE_DIR . "/te/st/test_hash"));
+        $this->assertFalse(file_exists(self::TEST_CACHE_DIR . self::_getHash('test_hash')));
     }
 
     public function testHmset()
@@ -234,5 +235,11 @@ final class CacheTest extends TestCase
             \AAD\Cache\Drivers\Files\Helper::remove(self::TEST_CACHE_DIR);
         }
         $this->assertFalse(is_dir(self::TEST_CACHE_DIR));
+    }
+
+    public static function _getHash($key)
+    {
+        $hash = (string) Uuid::uuid5(Uuid::NIL, $key);
+        return '/' . mb_substr($hash, 0, 2) . '/' . mb_substr($hash, 2, 2) . "/{$hash}";
     }
 }
