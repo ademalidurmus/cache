@@ -1,4 +1,6 @@
-<?php namespace AAD\Cache\Drivers\Predis;
+<?php
+
+namespace AAD\Cache\Drivers\Predis;
 
 use AAD\Cache\CacheInterface;
 use AAD\Cache\Drivers\Redis\Base as RedisBase;
@@ -37,7 +39,7 @@ class Predis extends RedisBase implements CacheInterface
         } else {
             $response = $this->connection->set($key, $value);
         }
-        
+
         return $response->__toString() === 'OK';
     }
 

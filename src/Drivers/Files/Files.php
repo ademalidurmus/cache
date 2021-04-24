@@ -1,4 +1,6 @@
-<?php namespace AAD\Cache\Drivers\Files;
+<?php
+
+namespace AAD\Cache\Drivers\Files;
 
 use AAD\Cache\CacheInterface;
 use AAD\Cache\Drivers\Files\Helper;
@@ -14,7 +16,7 @@ class Files implements CacheInterface
         $files = new Files();
         return $files->setConfig($config);
     }
-    
+
     public function setConfig(array $config = [])
     {
         foreach ($config as $key => $value) {
@@ -101,7 +103,7 @@ class Files implements CacheInterface
                 $data['create_time'] = $current_data['create_time'] ?? time();
             }
         }
-        
+
         return Helper::put($path, json_encode($data));
     }
 
@@ -177,7 +179,7 @@ class Files implements CacheInterface
 
         $data['update_time'] = time();
         $data['expire_time'] = $ttl == -1 ? -1 : time() + $ttl;
-        
+
         return Helper::put($path, json_encode($data));
     }
 
@@ -256,7 +258,7 @@ class Files implements CacheInterface
                 }
             }
         }
-        
+
         return Helper::put($path, json_encode($data));
     }
 

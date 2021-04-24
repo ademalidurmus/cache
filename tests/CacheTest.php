@@ -1,4 +1,6 @@
-<?php namespace AAD\Cache;
+<?php
+
+namespace AAD\Cache;
 
 use PHPUnit\Framework\TestCase;
 use AAD\Cache\Drivers\Files\Files;

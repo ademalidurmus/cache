@@ -1,4 +1,6 @@
-<?php namespace AAD\Cache;
+<?php
+
+namespace AAD\Cache;
 
 interface CacheInterface
 {
@@ -9,7 +11,7 @@ interface CacheInterface
     public function del(string $key);
 
     public function hset(string $hash, string $key, $value);
-    
+
     public function hget(string $hash, string $key);
 
     public function hdel(string $hash, string $key);
@@ -23,6 +25,6 @@ interface CacheInterface
     public function ttl(string $hash);
 
     public function exists(string $hash);
-    
+
     public function flushall();
 }

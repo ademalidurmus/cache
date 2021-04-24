@@ -1,4 +1,6 @@
-<?php namespace AAD\Cache\Drivers\Redis;
+<?php
+
+namespace AAD\Cache\Drivers\Redis;
 
 class Base
 {
@@ -9,7 +11,7 @@ class Base
         if (!is_numeric($response) && !is_bool($response)) {
             $response = unserialize($response);
         }
-        
+
         return $response;
     }
 
@@ -26,7 +28,7 @@ class Base
 
         return $this->connection->hset($hash, $key, $value);
     }
-    
+
     public function hget(string $hash, string $key)
     {
         $response = $this->connection->hget($hash, $key);
@@ -34,7 +36,7 @@ class Base
         if (!is_numeric($response) && !is_bool($response)) {
             $response = unserialize($response);
         }
-        
+
         return $response;
     }
 

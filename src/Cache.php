@@ -1,4 +1,6 @@
-<?php namespace AAD\Cache;
+<?php
+
+namespace AAD\Cache;
 
 use Psr\SimpleCache\CacheInterface as SimpleCacheInterface;
 
@@ -15,7 +17,7 @@ class Cache implements SimpleCacheInterface
     {
         return new Cache($cache);
     }
-    
+
     public function set($key, $value, $ttl = null)
     {
         $key = self::keyCleaner($key);
@@ -23,7 +25,7 @@ class Cache implements SimpleCacheInterface
         if (!is_null($ttl) && $ttl < -1) {
             $ttl = -1;
         }
-        
+
         return $this->cache->set($key, $value, $ttl);
     }
 
@@ -146,7 +148,7 @@ class Cache implements SimpleCacheInterface
             $key = self::keyCleaner($key);
 
             $value = $this->cache->get($key);
-            
+
             if ($value === false) {
                 $value = $default;
             }

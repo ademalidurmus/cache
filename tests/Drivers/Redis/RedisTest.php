@@ -1,4 +1,6 @@
-<?php namespace AAD\Cache\Drivers\Redis;
+<?php
+
+namespace AAD\Cache\Drivers\Redis;
 
 use PHPUnit\Framework\TestCase;
 
@@ -19,13 +21,13 @@ final class RedisTest extends TestCase
     public function testSet()
     {
         $conn = $this->getMockBuilder(\Redis::class)
-                        ->disableOriginalConstructor()
-                        ->setMethods(['set'])
-                        ->getMock();
+            ->disableOriginalConstructor()
+            ->setMethods(['set'])
+            ->getMock();
 
         $conn->expects($this->once())
-                ->method('set')
-                ->will($this->returnValue(true));
+            ->method('set')
+            ->will($this->returnValue(true));
 
         /**
          * @var \Redis $conn
@@ -37,13 +39,13 @@ final class RedisTest extends TestCase
     public function testHmset()
     {
         $conn = $this->getMockBuilder(\Redis::class)
-                        ->disableOriginalConstructor()
-                        ->setMethods(['hmset'])
-                        ->getMock();
+            ->disableOriginalConstructor()
+            ->setMethods(['hmset'])
+            ->getMock();
 
         $conn->expects($this->once())
-                ->method('hmset')
-                ->will($this->returnValue(true));
+            ->method('hmset')
+            ->will($this->returnValue(true));
 
         /**
          * @var \Redis $conn
@@ -55,13 +57,13 @@ final class RedisTest extends TestCase
     public function testFlushall()
     {
         $conn = $this->getMockBuilder(\Redis::class)
-                        ->disableOriginalConstructor()
-                        ->setMethods(['flushall'])
-                        ->getMock();
+            ->disableOriginalConstructor()
+            ->setMethods(['flushall'])
+            ->getMock();
 
         $conn->expects($this->once())
-                ->method('flushall')
-                ->will($this->returnValue(true));
+            ->method('flushall')
+            ->will($this->returnValue(true));
 
         /**
          * @var \Redis $conn

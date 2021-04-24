@@ -1,4 +1,6 @@
-<?php namespace AAD\Cache\Drivers\Predis;
+<?php
+
+namespace AAD\Cache\Drivers\Predis;
 
 use PHPUnit\Framework\TestCase;
 use Predis\Client as PredisClient;
@@ -20,17 +22,17 @@ final class PredisTest extends TestCase
     public function testSet()
     {
         $conn = $this->getMockBuilder(PredisClient::class)
-                        ->disableOriginalConstructor()
-                        ->setMethods(['set'])
-                        ->getMock();
+            ->disableOriginalConstructor()
+            ->setMethods(['set'])
+            ->getMock();
 
         $conn->expects($this->once())
-                ->method('set')
-                ->will($this->returnCallback(
-                    function () {
-                        return new \Predis\Response\Status('OK');
-                    }
-                ));
+            ->method('set')
+            ->will($this->returnCallback(
+                function () {
+                    return new \Predis\Response\Status('OK');
+                }
+            ));
 
         /**
          * @var PredisClient $conn
@@ -42,17 +44,17 @@ final class PredisTest extends TestCase
     public function testSetWithTtl()
     {
         $conn = $this->getMockBuilder(PredisClient::class)
-                        ->disableOriginalConstructor()
-                        ->setMethods(['setex'])
-                        ->getMock();
+            ->disableOriginalConstructor()
+            ->setMethods(['setex'])
+            ->getMock();
 
         $conn->expects($this->once())
-                ->method('setex')
-                ->will($this->returnCallback(
-                    function () {
-                        return new \Predis\Response\Status('OK');
-                    }
-                ));
+            ->method('setex')
+            ->will($this->returnCallback(
+                function () {
+                    return new \Predis\Response\Status('OK');
+                }
+            ));
 
         /**
          * @var PredisClient $conn
@@ -64,8 +66,8 @@ final class PredisTest extends TestCase
     public function testSetWithZeroTtl()
     {
         $conn = $this->getMockBuilder(PredisClient::class)
-                        ->disableOriginalConstructor()
-                        ->getMock();
+            ->disableOriginalConstructor()
+            ->getMock();
 
         /**
          * @var PredisClient $conn
@@ -77,13 +79,13 @@ final class PredisTest extends TestCase
     public function testGet()
     {
         $conn = $this->getMockBuilder(PredisClient::class)
-                        ->disableOriginalConstructor()
-                        ->setMethods(['get'])
-                        ->getMock();
+            ->disableOriginalConstructor()
+            ->setMethods(['get'])
+            ->getMock();
 
         $conn->expects($this->once())
-                ->method('get')
-                ->will($this->returnValue(\serialize('test_val')));
+            ->method('get')
+            ->will($this->returnValue(\serialize('test_val')));
 
         /**
          * @var PredisClient $conn
@@ -95,13 +97,13 @@ final class PredisTest extends TestCase
     public function testGetNumeric()
     {
         $conn = $this->getMockBuilder(PredisClient::class)
-                        ->disableOriginalConstructor()
-                        ->setMethods(['get'])
-                        ->getMock();
+            ->disableOriginalConstructor()
+            ->setMethods(['get'])
+            ->getMock();
 
         $conn->expects($this->once())
-                ->method('get')
-                ->will($this->returnValue(25));
+            ->method('get')
+            ->will($this->returnValue(25));
 
         /**
          * @var PredisClient $conn
@@ -113,13 +115,13 @@ final class PredisTest extends TestCase
     public function testDel()
     {
         $conn = $this->getMockBuilder(PredisClient::class)
-                        ->disableOriginalConstructor()
-                        ->setMethods(['del'])
-                        ->getMock();
+            ->disableOriginalConstructor()
+            ->setMethods(['del'])
+            ->getMock();
 
         $conn->expects($this->once())
-                ->method('del')
-                ->will($this->returnValue(true));
+            ->method('del')
+            ->will($this->returnValue(true));
 
         /**
          * @var PredisClient $conn
@@ -131,13 +133,13 @@ final class PredisTest extends TestCase
     public function testHset()
     {
         $conn = $this->getMockBuilder(PredisClient::class)
-                        ->disableOriginalConstructor()
-                        ->setMethods(['hset'])
-                        ->getMock();
+            ->disableOriginalConstructor()
+            ->setMethods(['hset'])
+            ->getMock();
 
         $conn->expects($this->once())
-                ->method('hset')
-                ->will($this->returnValue(true));
+            ->method('hset')
+            ->will($this->returnValue(true));
 
         /**
          * @var PredisClient $conn
@@ -149,13 +151,13 @@ final class PredisTest extends TestCase
     public function testHget()
     {
         $conn = $this->getMockBuilder(PredisClient::class)
-                        ->disableOriginalConstructor()
-                        ->setMethods(['hget'])
-                        ->getMock();
+            ->disableOriginalConstructor()
+            ->setMethods(['hget'])
+            ->getMock();
 
         $conn->expects($this->once())
-                ->method('hget')
-                ->will($this->returnValue(\serialize('test_val')));
+            ->method('hget')
+            ->will($this->returnValue(\serialize('test_val')));
 
         /**
          * @var PredisClient $conn
@@ -167,13 +169,13 @@ final class PredisTest extends TestCase
     public function testHgetNumeric()
     {
         $conn = $this->getMockBuilder(PredisClient::class)
-                        ->disableOriginalConstructor()
-                        ->setMethods(['hget'])
-                        ->getMock();
+            ->disableOriginalConstructor()
+            ->setMethods(['hget'])
+            ->getMock();
 
         $conn->expects($this->once())
-                ->method('hget')
-                ->will($this->returnValue(25));
+            ->method('hget')
+            ->will($this->returnValue(25));
 
         /**
          * @var PredisClient $conn
@@ -185,13 +187,13 @@ final class PredisTest extends TestCase
     public function testHgetBoolean()
     {
         $conn = $this->getMockBuilder(PredisClient::class)
-                        ->disableOriginalConstructor()
-                        ->setMethods(['hget'])
-                        ->getMock();
+            ->disableOriginalConstructor()
+            ->setMethods(['hget'])
+            ->getMock();
 
         $conn->expects($this->once())
-                ->method('hget')
-                ->will($this->returnValue(false));
+            ->method('hget')
+            ->will($this->returnValue(false));
 
         /**
          * @var PredisClient $conn
@@ -203,13 +205,13 @@ final class PredisTest extends TestCase
     public function testHdel()
     {
         $conn = $this->getMockBuilder(PredisClient::class)
-                        ->disableOriginalConstructor()
-                        ->setMethods(['hdel'])
-                        ->getMock();
+            ->disableOriginalConstructor()
+            ->setMethods(['hdel'])
+            ->getMock();
 
         $conn->expects($this->once())
-                ->method('hdel')
-                ->will($this->returnValue(true));
+            ->method('hdel')
+            ->will($this->returnValue(true));
 
         /**
          * @var PredisClient $conn
@@ -221,17 +223,17 @@ final class PredisTest extends TestCase
     public function testHmset()
     {
         $conn = $this->getMockBuilder(PredisClient::class)
-                        ->disableOriginalConstructor()
-                        ->setMethods(['hmset'])
-                        ->getMock();
+            ->disableOriginalConstructor()
+            ->setMethods(['hmset'])
+            ->getMock();
 
         $conn->expects($this->once())
-                ->method('hmset')
-                ->will($this->returnCallback(
-                    function () {
-                        return new \Predis\Response\Status('OK');
-                    }
-                ));
+            ->method('hmset')
+            ->will($this->returnCallback(
+                function () {
+                    return new \Predis\Response\Status('OK');
+                }
+            ));
 
         /**
          * @var PredisClient $conn
@@ -243,13 +245,13 @@ final class PredisTest extends TestCase
     public function testHgetall()
     {
         $conn = $this->getMockBuilder(PredisClient::class)
-                        ->disableOriginalConstructor()
-                        ->setMethods(['hgetall'])
-                        ->getMock();
+            ->disableOriginalConstructor()
+            ->setMethods(['hgetall'])
+            ->getMock();
 
         $conn->expects($this->once())
-                ->method('hgetall')
-                ->will($this->returnValue([\serialize(['item_1', 'item_2']), 22]));
+            ->method('hgetall')
+            ->will($this->returnValue([\serialize(['item_1', 'item_2']), 22]));
 
         /**
          * @var PredisClient $conn
@@ -264,13 +266,13 @@ final class PredisTest extends TestCase
     public function testHgetallNumeric()
     {
         $conn = $this->getMockBuilder(PredisClient::class)
-                        ->disableOriginalConstructor()
-                        ->setMethods(['hgetall'])
-                        ->getMock();
+            ->disableOriginalConstructor()
+            ->setMethods(['hgetall'])
+            ->getMock();
 
         $conn->expects($this->once())
-                ->method('hgetall')
-                ->will($this->returnValue([22]));
+            ->method('hgetall')
+            ->will($this->returnValue([22]));
 
         /**
          * @var PredisClient $conn
@@ -284,13 +286,13 @@ final class PredisTest extends TestCase
     public function testExpire()
     {
         $conn = $this->getMockBuilder(PredisClient::class)
-                        ->disableOriginalConstructor()
-                        ->setMethods(['expire'])
-                        ->getMock();
+            ->disableOriginalConstructor()
+            ->setMethods(['expire'])
+            ->getMock();
 
         $conn->expects($this->once())
-                ->method('expire')
-                ->will($this->returnValue(true));
+            ->method('expire')
+            ->will($this->returnValue(true));
 
         /**
          * @var PredisClient $conn
@@ -302,13 +304,13 @@ final class PredisTest extends TestCase
     public function testTtl()
     {
         $conn = $this->getMockBuilder(PredisClient::class)
-                        ->disableOriginalConstructor()
-                        ->setMethods(['ttl'])
-                        ->getMock();
+            ->disableOriginalConstructor()
+            ->setMethods(['ttl'])
+            ->getMock();
 
         $conn->expects($this->once())
-                ->method('ttl')
-                ->will($this->returnValue(180));
+            ->method('ttl')
+            ->will($this->returnValue(180));
 
         /**
          * @var PredisClient $conn
@@ -320,13 +322,13 @@ final class PredisTest extends TestCase
     public function testExists()
     {
         $conn = $this->getMockBuilder(PredisClient::class)
-                        ->disableOriginalConstructor()
-                        ->setMethods(['exists'])
-                        ->getMock();
+            ->disableOriginalConstructor()
+            ->setMethods(['exists'])
+            ->getMock();
 
         $conn->expects($this->once())
-                ->method('exists')
-                ->will($this->returnValue(true));
+            ->method('exists')
+            ->will($this->returnValue(true));
 
         /**
          * @var PredisClient $conn
@@ -338,17 +340,17 @@ final class PredisTest extends TestCase
     public function testFlushall()
     {
         $conn = $this->getMockBuilder(PredisClient::class)
-                        ->disableOriginalConstructor()
-                        ->setMethods(['flushall'])
-                        ->getMock();
+            ->disableOriginalConstructor()
+            ->setMethods(['flushall'])
+            ->getMock();
 
         $conn->expects($this->once())
-                ->method('flushall')
-                ->will($this->returnCallback(
-                    function () {
-                        return new \Predis\Response\Status('OK');
-                    }
-                ));
+            ->method('flushall')
+            ->will($this->returnCallback(
+                function () {
+                    return new \Predis\Response\Status('OK');
+                }
+            ));
 
         /**
          * @var PredisClient $conn

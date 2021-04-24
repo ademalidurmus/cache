@@ -1,4 +1,6 @@
-<?php namespace AAD\Cache\Drivers\Files;
+<?php
+
+namespace AAD\Cache\Drivers\Files;
 
 use AAD\Cache\CacheTest;
 use PHPUnit\Framework\TestCase;
@@ -171,7 +173,7 @@ final class FilesTest extends TestCase
         $response = Files::init(self::TEST_CONFIG)->hget('test_hash', 'test_key_1');
         $this->assertFalse($response);
     }
-    
+
     public function testHdel()
     {
         $response = Files::init(self::TEST_CONFIG)->hset('test_new_hash', 'test_key_1', 'test_val_1');
@@ -276,7 +278,7 @@ final class FilesTest extends TestCase
 
         $response = Files::init(self::TEST_CONFIG)->del('test_exists_key');
         $this->assertTrue($response);
- 
+
         $response = Files::init(self::TEST_CONFIG)->exists('test_exists_key');
         $this->assertFalse($response);
 
@@ -297,7 +299,7 @@ final class FilesTest extends TestCase
 
         $response = Files::init(self::TEST_CONFIG)->flushall();
         $this->assertTrue($response);
- 
+
         $response = Files::init(self::TEST_CONFIG)->exists('test_flushall_key');
         $this->assertFalse($response);
     }
@@ -322,7 +324,7 @@ final class FilesTest extends TestCase
     {
         $response = Files::init(self::TEST_CONFIG)->flushall();
         $this->assertTrue($response);
- 
+
         $response = Files::init(self::TEST_CONFIG)->hset('test_hash', 'test_key', 'test_val');
         $this->assertTrue($response);
 

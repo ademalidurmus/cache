@@ -1,11 +1,13 @@
-<?php namespace AAD\Cache\Drivers\Files;
+<?php
+
+namespace AAD\Cache\Drivers\Files;
 
 class Helper
 {
     public static function remove($dir)
     {
         $scan = @scandir($dir);
-        
+
         if (is_array($scan)) {
             foreach ($scan as $key => $value) {
                 if (!in_array($value, [".", ".."])) {

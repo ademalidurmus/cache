@@ -1,4 +1,6 @@
-<?php namespace AAD\Cache\Drivers\Redis;
+<?php
+
+namespace AAD\Cache\Drivers\Redis;
 
 use AAD\Cache\CacheInterface;
 use Redis as PHPRedis;
@@ -38,7 +40,7 @@ class Redis extends Base implements CacheInterface
 
         return $this->connection->hmset($hash, $args);
     }
-        
+
     public function flushall()
     {
         return $this->connection->flushall();

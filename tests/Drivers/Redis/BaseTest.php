@@ -1,4 +1,6 @@
-<?php namespace AAD\Cache\Drivers\Redis;
+<?php
+
+namespace AAD\Cache\Drivers\Redis;
 
 use PHPUnit\Framework\TestCase;
 
@@ -7,13 +9,13 @@ final class BaseTest extends TestCase
     public function testGet()
     {
         $conn = $this->getMockBuilder(\Redis::class)
-                        ->disableOriginalConstructor()
-                        ->setMethods(['get'])
-                        ->getMock();
+            ->disableOriginalConstructor()
+            ->setMethods(['get'])
+            ->getMock();
 
         $conn->expects($this->once())
-                ->method('get')
-                ->will($this->returnValue(\serialize('test_val')));
+            ->method('get')
+            ->will($this->returnValue(\serialize('test_val')));
 
         /**
          * @var \Redis $conn
@@ -25,13 +27,13 @@ final class BaseTest extends TestCase
     public function testGetNumeric()
     {
         $conn = $this->getMockBuilder(\Redis::class)
-                        ->disableOriginalConstructor()
-                        ->setMethods(['get'])
-                        ->getMock();
+            ->disableOriginalConstructor()
+            ->setMethods(['get'])
+            ->getMock();
 
         $conn->expects($this->once())
-                ->method('get')
-                ->will($this->returnValue(25));
+            ->method('get')
+            ->will($this->returnValue(25));
 
         /**
          * @var \Redis $conn
@@ -43,13 +45,13 @@ final class BaseTest extends TestCase
     public function testDel()
     {
         $conn = $this->getMockBuilder(\Redis::class)
-                        ->disableOriginalConstructor()
-                        ->setMethods(['del'])
-                        ->getMock();
+            ->disableOriginalConstructor()
+            ->setMethods(['del'])
+            ->getMock();
 
         $conn->expects($this->once())
-                ->method('del')
-                ->will($this->returnValue(true));
+            ->method('del')
+            ->will($this->returnValue(true));
 
         /**
          * @var \Redis $conn
@@ -61,13 +63,13 @@ final class BaseTest extends TestCase
     public function testHset()
     {
         $conn = $this->getMockBuilder(\Redis::class)
-                        ->disableOriginalConstructor()
-                        ->setMethods(['hset'])
-                        ->getMock();
+            ->disableOriginalConstructor()
+            ->setMethods(['hset'])
+            ->getMock();
 
         $conn->expects($this->once())
-                ->method('hset')
-                ->will($this->returnValue(true));
+            ->method('hset')
+            ->will($this->returnValue(true));
 
         /**
          * @var \Redis $conn
@@ -79,13 +81,13 @@ final class BaseTest extends TestCase
     public function testHget()
     {
         $conn = $this->getMockBuilder(\Redis::class)
-                        ->disableOriginalConstructor()
-                        ->setMethods(['hget'])
-                        ->getMock();
+            ->disableOriginalConstructor()
+            ->setMethods(['hget'])
+            ->getMock();
 
         $conn->expects($this->once())
-                ->method('hget')
-                ->will($this->returnValue(\serialize('test_val')));
+            ->method('hget')
+            ->will($this->returnValue(\serialize('test_val')));
 
         /**
          * @var \Redis $conn
@@ -97,13 +99,13 @@ final class BaseTest extends TestCase
     public function testHgetNumeric()
     {
         $conn = $this->getMockBuilder(\Redis::class)
-                        ->disableOriginalConstructor()
-                        ->setMethods(['hget'])
-                        ->getMock();
+            ->disableOriginalConstructor()
+            ->setMethods(['hget'])
+            ->getMock();
 
         $conn->expects($this->once())
-                ->method('hget')
-                ->will($this->returnValue(25));
+            ->method('hget')
+            ->will($this->returnValue(25));
 
         /**
          * @var \Redis $conn
@@ -115,13 +117,13 @@ final class BaseTest extends TestCase
     public function testHgetBoolean()
     {
         $conn = $this->getMockBuilder(\Redis::class)
-                        ->disableOriginalConstructor()
-                        ->setMethods(['hget'])
-                        ->getMock();
+            ->disableOriginalConstructor()
+            ->setMethods(['hget'])
+            ->getMock();
 
         $conn->expects($this->once())
-                ->method('hget')
-                ->will($this->returnValue(false));
+            ->method('hget')
+            ->will($this->returnValue(false));
 
         /**
          * @var \Redis $conn
@@ -133,13 +135,13 @@ final class BaseTest extends TestCase
     public function testHdel()
     {
         $conn = $this->getMockBuilder(\Redis::class)
-                        ->disableOriginalConstructor()
-                        ->setMethods(['hdel'])
-                        ->getMock();
+            ->disableOriginalConstructor()
+            ->setMethods(['hdel'])
+            ->getMock();
 
         $conn->expects($this->once())
-                ->method('hdel')
-                ->will($this->returnValue(true));
+            ->method('hdel')
+            ->will($this->returnValue(true));
 
         /**
          * @var \Redis $conn
@@ -151,13 +153,13 @@ final class BaseTest extends TestCase
     public function testHgetall()
     {
         $conn = $this->getMockBuilder(\Redis::class)
-                        ->disableOriginalConstructor()
-                        ->setMethods(['hgetall'])
-                        ->getMock();
+            ->disableOriginalConstructor()
+            ->setMethods(['hgetall'])
+            ->getMock();
 
         $conn->expects($this->once())
-                ->method('hgetall')
-                ->will($this->returnValue([\serialize(['item_1', 'item_2']), 22]));
+            ->method('hgetall')
+            ->will($this->returnValue([\serialize(['item_1', 'item_2']), 22]));
 
         /**
          * @var \Redis $conn
@@ -172,13 +174,13 @@ final class BaseTest extends TestCase
     public function testHgetallNumeric()
     {
         $conn = $this->getMockBuilder(\Redis::class)
-                        ->disableOriginalConstructor()
-                        ->setMethods(['hgetall'])
-                        ->getMock();
+            ->disableOriginalConstructor()
+            ->setMethods(['hgetall'])
+            ->getMock();
 
         $conn->expects($this->once())
-                ->method('hgetall')
-                ->will($this->returnValue([22]));
+            ->method('hgetall')
+            ->will($this->returnValue([22]));
 
         /**
          * @var \Redis $conn
@@ -192,13 +194,13 @@ final class BaseTest extends TestCase
     public function testExpire()
     {
         $conn = $this->getMockBuilder(\Redis::class)
-                        ->disableOriginalConstructor()
-                        ->setMethods(['expire'])
-                        ->getMock();
+            ->disableOriginalConstructor()
+            ->setMethods(['expire'])
+            ->getMock();
 
         $conn->expects($this->once())
-                ->method('expire')
-                ->will($this->returnValue(true));
+            ->method('expire')
+            ->will($this->returnValue(true));
 
         /**
          * @var \Redis $conn
@@ -210,13 +212,13 @@ final class BaseTest extends TestCase
     public function testTtl()
     {
         $conn = $this->getMockBuilder(\Redis::class)
-                        ->disableOriginalConstructor()
-                        ->setMethods(['ttl'])
-                        ->getMock();
+            ->disableOriginalConstructor()
+            ->setMethods(['ttl'])
+            ->getMock();
 
         $conn->expects($this->once())
-                ->method('ttl')
-                ->will($this->returnValue(180));
+            ->method('ttl')
+            ->will($this->returnValue(180));
 
         /**
          * @var \Redis $conn
@@ -228,13 +230,13 @@ final class BaseTest extends TestCase
     public function testExists()
     {
         $conn = $this->getMockBuilder(\Redis::class)
-                        ->disableOriginalConstructor()
-                        ->setMethods(['exists'])
-                        ->getMock();
+            ->disableOriginalConstructor()
+            ->setMethods(['exists'])
+            ->getMock();
 
         $conn->expects($this->once())
-                ->method('exists')
-                ->will($this->returnValue(true));
+            ->method('exists')
+            ->will($this->returnValue(true));
 
         /**
          * @var \Redis $conn
