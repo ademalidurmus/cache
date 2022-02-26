@@ -4,7 +4,7 @@ namespace AAD\Cache\Drivers\Files;
 
 use AAD\Cache\CacheInterface;
 use AAD\Cache\Drivers\Files\Helper;
-use Rhumsaa\Uuid\Uuid;
+use Ramsey\Uuid\Uuid;
 
 class Files implements CacheInterface
 {

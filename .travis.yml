@@ -1,6 +1,7 @@
 language: php
+dist: bionic
 php:
-  - 7.3
+  - '8.1.0'
 branches:
   only:
     master

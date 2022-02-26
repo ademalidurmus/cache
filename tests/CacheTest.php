@@ -4,7 +4,7 @@ namespace AAD\Cache;
 
 use PHPUnit\Framework\TestCase;
 use AAD\Cache\Drivers\Files\Files;
-use Rhumsaa\Uuid\Uuid;
+use Ramsey\Uuid\Uuid;
 
 final class CacheTest extends TestCase
 {
